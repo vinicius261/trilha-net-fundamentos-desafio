@@ -14,18 +14,28 @@ namespace DesafioFundamentos.Models
 
         public void AdicionarVeiculo()
         {
-            // TODO: Pedir para o usuário digitar uma placa (ReadLine) e adicionar na lista "veiculos"
-            // *IMPLEMENTE AQUI*
-            Console.WriteLine("Digite a placa do veículo para estacionar:");
+            Console.WriteLine("Para estacionar, digite a placa do veículo sem pontuações:");
+            string placa = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(placa) || placa.Length != 7 || placa.Contains("-"))
+            {
+                Console.WriteLine("Placa inválida. A placa deve ter 7 caracteres e apenas números e letras.");
+            }
+            else if (veiculos.Any(x => x.ToUpper() == placa.ToUpper()))
+            {
+                Console.WriteLine("O veículo já está estacionado.");
+            }
+            else
+            {
+                veiculos.Add(placa);
+                Console.WriteLine($"A entrada do veículo de {placa} foi registrada");
+            }
         }
 
         public void RemoverVeiculo()
         {
-            Console.WriteLine("Digite a placa do veículo para remover:");
-
-            // Pedir para o usuário digitar a placa e armazenar na variável placa
-            // *IMPLEMENTE AQUI*
-            string placa = "";
+            Console.WriteLine("Digite a placa do veículo para registrar a saída:");
+            string placa = Console.ReadLine();
 
             // Verifica se o veículo existe
             if (veiculos.Any(x => x.ToUpper() == placa.ToUpper()))
@@ -35,8 +45,15 @@ namespace DesafioFundamentos.Models
                 // TODO: Pedir para o usuário digitar a quantidade de horas que o veículo permaneceu estacionado,
                 // TODO: Realizar o seguinte cálculo: "precoInicial + precoPorHora * horas" para a variável valorTotal                
                 // *IMPLEMENTE AQUI*
-                int horas = 0;
-                decimal valorTotal = 0; 
+                string horas = Console.ReadLine();
+
+                if (!int.TryParse(horas, out int horasEstacionado) || horasEstacionado < 0)
+                {
+                    Console.WriteLine("Quantidade de horas inválida. Deve ser um número inteiro positivo.");
+                    return;
+                }
+
+                decimal valorTotal = 0;
 
                 // TODO: Remover a placa digitada da lista de veículos
                 // *IMPLEMENTE AQUI*
