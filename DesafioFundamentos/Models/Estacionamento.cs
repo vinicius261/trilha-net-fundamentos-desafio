@@ -42,34 +42,55 @@ namespace DesafioFundamentos.Models
         /// </summary>
         public void RemoverVeiculo()
         {
-            Console.WriteLine("Digite a placa do veículo para registrar a saída:\n");
-            string placa = Console.ReadLine();
-
-            if (veiculos.Any(x => x.ToUpper() == placa.ToUpper()))
+            if (veiculos.Count() > 0)
             {
-                Console.WriteLine("Digite a quantidade de horas que o veículo permaneceu estacionado:\n");
-                string horas = Console.ReadLine();
+                bool opcaoInvalida = true;
 
-                while (!int.TryParse(horas, out int horasInteiro) || horasInteiro < 0)
+                while (opcaoInvalida)
                 {
-                    Console.WriteLine("Quantidade de horas inválida. Coloque apenas horas cheias.\n");
+                    Console.WriteLine("Qual veículo deseja remover?\n");
+                    for (int i = 0; i < veiculos.Count(); i++)
+                    {
+                        Console.WriteLine(i + " - " + veiculos[i] + "\n");
+                    }
+                    Console.WriteLine("Digite o número correspondente a placa que deseja apagar:\n");
+                    string opcao = Console.ReadLine();
+
+                    if (int.TryParse(opcao, out int indice) && indice >= 0 && indice < veiculos.Count)
+                    {
+                        indice = int.Parse(opcao);
+                        opcaoInvalida = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Opção inválida. Por favor, digite um número correspondente a uma placa listada.\n");
+                    }
 
                     Console.WriteLine("Digite a quantidade de horas que o veículo permaneceu estacionado:\n");
+                    string horas = Console.ReadLine();
 
-                    horas = Console.ReadLine();
+                    while (!int.TryParse(horas, out int horasInteiro) || horasInteiro < 0)
+                    {
+                        Console.WriteLine("Quantidade de horas inválida. Coloque apenas horas cheias.\n");
+
+                        Console.WriteLine("Digite a quantidade de horas que o veículo permaneceu estacionado:\n");
+
+                        horas = Console.ReadLine();
+                    }
+
+                    int horasEstacionado = int.Parse(horas);
+                    decimal valorTotal = this.precoInicial + this.precoPorHora * horasEstacionado;
+
+                    string placa = veiculos[indice];
+
+                    this.veiculos.Remove(placa);
+
+                    Console.WriteLine($"O veículo {placa} foi removido e o preço total foi de: R$ {valorTotal}\n");
                 }
-
-                int horasEstacionado =  int.Parse(horas);
-                decimal valorTotal = this.precoInicial + this.precoPorHora * horasEstacionado ;
-
-                this.veiculos.Remove(placa.ToUpper());
-
-                Console.WriteLine($"O veículo {placa} foi removido e o preço total foi de: R$ {valorTotal}\n");
             }
             else
             {
-                Console.WriteLine("Desculpe, esse veículo não está estacionado aqui. Confira se digitou a placa corretamente\n" +
-                    "Lembre-se que a placa deve ter 7 caracteres e apenas números e letras.\n");
+                Console.WriteLine("Não há veículos estacionados.\n");
             }
         }
         /// <summary>
