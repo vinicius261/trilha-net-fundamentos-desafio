@@ -1,17 +1,23 @@
 namespace DesafioFundamentos.Models
-{
+{   /// <summary>Classe que representa a lógica de registo e cobrança do estacionamento.</summary>
     public class Estacionamento
-    {
+    {   
         private decimal precoInicial = 0;
         private decimal precoPorHora = 0;
         private List<string> veiculos = new List<string>();
-
+        /// <summary>
+        /// Construtor da classe estacionamento.
+        /// </summary>
+        /// <param name="precoInicial">Valor em R$ da primeira hora no estacionamento</param>
+        /// <param name="precoPorHora">Valor em R$ das horas adicionais no estacionamento</param>
         public Estacionamento(decimal precoInicial, decimal precoPorHora)
         {
             this.precoInicial = precoInicial;
             this.precoPorHora = precoPorHora;
         }
-
+        /// <summary>
+        /// Método para adicionar um veículo ao estacionamento.
+        /// </summary>
         public void AdicionarVeiculo()
         {
             Console.WriteLine("Para estacionar, digite a placa do veículo sem pontuações:\n");
@@ -31,7 +37,9 @@ namespace DesafioFundamentos.Models
                 Console.WriteLine($"A entrada do veículo de {placa} foi registrada\n");
             }
         }
-
+        /// <summary>
+        /// Método para remover um veículo do estacionamento e calcular o valor total a ser pago.
+        /// </summary>
         public void RemoverVeiculo()
         {
             Console.WriteLine("Digite a placa do veículo para registrar a saída:\n");
@@ -64,7 +72,9 @@ namespace DesafioFundamentos.Models
                     "Lembre-se que a placa deve ter 7 caracteres e apenas números e letras.\n");
             }
         }
-
+        /// <summary>
+        /// Método para listar os veículos estacionados.
+        /// </summary>
         public void ListarVeiculos()
         {
             if (veiculos.Any())
