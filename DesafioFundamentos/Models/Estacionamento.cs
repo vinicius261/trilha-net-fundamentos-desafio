@@ -14,70 +14,70 @@ namespace DesafioFundamentos.Models
 
         public void AdicionarVeiculo()
         {
-            Console.WriteLine("Para estacionar, digite a placa do veículo sem pontuações:");
+            Console.WriteLine("Para estacionar, digite a placa do veículo sem pontuações:\n");
             string placa = Console.ReadLine();
 
             if (string.IsNullOrWhiteSpace(placa) || placa.Length != 7 || placa.Contains("-"))
             {
-                Console.WriteLine("Placa inválida. A placa deve ter 7 caracteres e apenas números e letras.");
+                Console.WriteLine("Placa inválida. A placa deve ter 7 caracteres e apenas números e letras.\n");
             }
             else if (veiculos.Any(x => x.ToUpper() == placa.ToUpper()))
             {
-                Console.WriteLine("O veículo já está estacionado.");
+                Console.WriteLine("O veículo já está estacionado\n");
             }
             else
             {
-                veiculos.Add(placa);
-                Console.WriteLine($"A entrada do veículo de {placa} foi registrada");
+                veiculos.Add(placa.ToUpper());
+                Console.WriteLine($"A entrada do veículo de {placa} foi registrada\n");
             }
         }
 
         public void RemoverVeiculo()
         {
-            Console.WriteLine("Digite a placa do veículo para registrar a saída:");
+            Console.WriteLine("Digite a placa do veículo para registrar a saída:\n");
             string placa = Console.ReadLine();
 
-            // Verifica se o veículo existe
             if (veiculos.Any(x => x.ToUpper() == placa.ToUpper()))
             {
-                Console.WriteLine("Digite a quantidade de horas que o veículo permaneceu estacionado:");
-
-                // TODO: Pedir para o usuário digitar a quantidade de horas que o veículo permaneceu estacionado,
-                // TODO: Realizar o seguinte cálculo: "precoInicial + precoPorHora * horas" para a variável valorTotal                
-                // *IMPLEMENTE AQUI*
+                Console.WriteLine("Digite a quantidade de horas que o veículo permaneceu estacionado:\n");
                 string horas = Console.ReadLine();
 
-                if (!int.TryParse(horas, out int horasEstacionado) || horasEstacionado < 0)
+                while (!int.TryParse(horas, out int horasInteiro) || horasInteiro < 0)
                 {
-                    Console.WriteLine("Quantidade de horas inválida. Deve ser um número inteiro positivo.");
-                    return;
+                    Console.WriteLine("Quantidade de horas inválida. Coloque apenas horas cheias.\n");
+
+                    Console.WriteLine("Digite a quantidade de horas que o veículo permaneceu estacionado:\n");
+
+                    horas = Console.ReadLine();
                 }
 
-                decimal valorTotal = 0;
+                int horasEstacionado =  int.Parse(horas);
+                decimal valorTotal = this.precoInicial + this.precoPorHora * horasEstacionado ;
 
-                // TODO: Remover a placa digitada da lista de veículos
-                // *IMPLEMENTE AQUI*
+                this.veiculos.Remove(placa.ToUpper());
 
-                Console.WriteLine($"O veículo {placa} foi removido e o preço total foi de: R$ {valorTotal}");
+                Console.WriteLine($"O veículo {placa} foi removido e o preço total foi de: R$ {valorTotal}\n");
             }
             else
             {
-                Console.WriteLine("Desculpe, esse veículo não está estacionado aqui. Confira se digitou a placa corretamente");
+                Console.WriteLine("Desculpe, esse veículo não está estacionado aqui. Confira se digitou a placa corretamente\n" +
+                    "Lembre-se que a placa deve ter 7 caracteres e apenas números e letras.\n");
             }
         }
 
         public void ListarVeiculos()
         {
-            // Verifica se há veículos no estacionamento
             if (veiculos.Any())
             {
                 Console.WriteLine("Os veículos estacionados são:");
-                // TODO: Realizar um laço de repetição, exibindo os veículos estacionados
-                // *IMPLEMENTE AQUI*
+                foreach (var veiculo in veiculos)
+                {
+                    Console.WriteLine(veiculo + "\n");
+                }
             }
             else
             {
-                Console.WriteLine("Não há veículos estacionados.");
+                Console.WriteLine("Não há veículos estacionados.\n");
             }
         }
     }
