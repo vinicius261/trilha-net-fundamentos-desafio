@@ -51,12 +51,13 @@ namespace DesafioFundamentos.Models
                     Console.WriteLine("Qual veículo deseja remover?\n");
                     for (int i = 0; i < veiculos.Count(); i++)
                     {
-                        Console.WriteLine(i + " - " + veiculos[i] + "\n");
+                        Console.WriteLine($"{i+1} - {veiculos[i]}\n");
                     }
                     Console.WriteLine("Digite o número correspondente a placa que deseja apagar:\n");
                     string opcao = Console.ReadLine();
 
-                    if (int.TryParse(opcao, out int indice) && indice >= 0 && indice < veiculos.Count)
+                    // Opção é i+1 para melhor experiência do usuário.
+                    if (int.TryParse(opcao, out int indice) && indice > 0 && indice <= veiculos.Count)
                     {
                         indice = int.Parse(opcao);
                         opcaoInvalida = false;
@@ -81,7 +82,7 @@ namespace DesafioFundamentos.Models
                     int horasEstacionado = int.Parse(horas);
                     decimal valorTotal = this.precoInicial + this.precoPorHora * horasEstacionado;
 
-                    string placa = veiculos[indice];
+                    string placa = veiculos[indice-1];
 
                     this.veiculos.Remove(placa);
 
@@ -100,10 +101,9 @@ namespace DesafioFundamentos.Models
         {
             if (veiculos.Any())
             {
-                Console.WriteLine("Os veículos estacionados são:");
-                foreach (var veiculo in veiculos)
+                for(int i = 0; i < veiculos.Count(); i++)
                 {
-                    Console.WriteLine(veiculo + "\n");
+                    Console.WriteLine($"{i + 1} - {veiculos[i]}\n");
                 }
             }
             else
